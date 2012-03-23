@@ -84,86 +84,87 @@ function init() {
 
 
   setGrid(18, 0);
-}
-
-function setGrid($h, $o) {
-  var gridcount = pageHeight / $h;
-
-  for (i=0; i<gridcount; i++) {
-    gridwax.append(gridline)
-  }
-
-  $('.gw-gridline').css({       'width'         : '100%',
-                                'height'        : $h-1,
-                                'clear'         : 'both',
-                                'border-bottom' : '1px solid #000' })
-  console.log($('.gw-gridline').height())
-}
-
-function shave() {
-  gridwax.remove();
-  overlay.remove();
-}
-
-var shiftKey = false
-
-$(document).keydown(function(e) {
-  if (e.which == 16) { shiftKey = true; }
-})
-$(document).keyup(function(e) {
-  if ( e.which == 13 ) {
-     e.preventDefault();
-   }
-   groom(e)
-
- })
-
-function groom(e) {
-
-  if (shiftKey) {
-    var changed = true;
-    var row = $('.gw-gridline');
-    var _height = row.height();
-
-    var _offset = gridwax.offset();
-
-    switch(e.keyCode) {
-      case 16 :
-        shiftKey = false;
-        changed = false;
-        break;
-      case 38 :
-        // up
-        e.preventDefault()
-        _height = _height + 1
-        row.height(_height)
-        break;
-      case 39 :
-        // right
-        e.preventDefault()
-        gridwax.offset({ top: _offset.top + 1 })
-        break;
-      case 40 :
-        // down
-        e.preventDefault()
-        _height = _height - 1
-        row.height(_height)
-        break;
-      case 37 :
-        // left
-        e.preventDefault()
-        gridwax.offset({ top: _offset.top - 1 })
-        break;
-      default :
-        changed = false;
-        console.log("--")
-        break
-    }
   
-    if (changed) {
-      $('.gw-lh').val(_height + 1)
-      $('.gw-o').val(gridwax.offset().top)
+  
+  function setGrid($h, $o) {
+    var gridcount = pageHeight / $h;
+
+    for (i=0; i<gridcount; i++) {
+      gridwax.append(gridline)
+    }
+
+    $('.gw-gridline').css({       'width'         : '100%',
+                                  'height'        : $h-1,
+                                  'clear'         : 'both',
+                                  'border-bottom' : '1px solid #000' })
+    console.log($('.gw-gridline').height())
+  }
+
+  function shave() {
+    gridwax.remove();
+    overlay.remove();
+  }
+
+  var shiftKey = false
+
+  $(document).keydown(function(e) {
+    if (e.which == 16) { shiftKey = true; }
+  })
+  $(document).keyup(function(e) {
+    if ( e.which == 13 ) {
+       e.preventDefault();
+     }
+     groom(e)
+
+   })
+
+  function groom(e) {
+
+    if (shiftKey) {
+      var changed = true;
+      var row = $('.gw-gridline');
+      var _height = row.height();
+
+      var _offset = gridwax.offset();
+
+      switch(e.keyCode) {
+        case 16 :
+          shiftKey = false;
+          changed = false;
+          break;
+        case 38 :
+          // up
+          e.preventDefault()
+          _height = _height + 1
+          row.height(_height)
+          break;
+        case 39 :
+          // right
+          e.preventDefault()
+          gridwax.offset({ top: _offset.top + 1 })
+          break;
+        case 40 :
+          // down
+          e.preventDefault()
+          _height = _height - 1
+          row.height(_height)
+          break;
+        case 37 :
+          // left
+          e.preventDefault()
+          gridwax.offset({ top: _offset.top - 1 })
+          break;
+        default :
+          changed = false;
+          console.log("--")
+          break
+      }
+  
+      if (changed) {
+        $('.gw-lh').val(_height + 1)
+        $('.gw-o').val(gridwax.offset().top)
+      }
     }
   }
+  
 }
-;

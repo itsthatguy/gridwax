@@ -1,3 +1,4 @@
+
 if (!($ = window.jQuery)) { // typeof jQuery=='undefined' works too
   head        = document.getElementsByTagName('head')[0];
   jquery      = document.createElement( 'script' );
@@ -5,7 +6,14 @@ if (!($ = window.jQuery)) { // typeof jQuery=='undefined' works too
   jquery.type = 'text/javascript';
   head.appendChild(jquery);
   
+  // ceaser      = document.createElement( 'link' );
+  // ceaser.href = '/stylesheets/gridwax.css';
+  // ceaser.type = 'text/css';
+  // ceaser.rel  = 'stylesheet';
+  // head.appendChild(ceaser);
+  
   jquery.onload = init
+
 } else {
   console.log("flkajsdf")
 }
@@ -44,7 +52,7 @@ function init() {
                         <label>Line-height: <input type="text" class="gw-lh" value="18" /></label> \
                         <label>Offset: <input type="text" class="gw-o" value="0" /></label> \
                       </div> \
-                      <div id="gw-close" class="gw-razor"><a href="javascript:shave();">Remove the Grid</a></div> \
+                      <div id="gw-close" class="gw-razor"><a href="javascript:shave();">Remove the Grid ✖</a></div> \
                     </div>')
   overlay = $('#gw-overlay')
   overlay.css({                 'position'      : 'fixed',
@@ -53,6 +61,7 @@ function init() {
                                 'border-top'    : '1px solid #444',
                                 'box-shadow'    : '0 -4px 0 #444, 0 -2px 6px 3px #000',
                                 'background'    : '-webkit-linear-gradient(top, #333, #222)',
+                                'left'          : '0',
                                 'padding'       : '0',
                                 'margin'        : '0',
                                 'width'         : '100%',
@@ -74,18 +83,38 @@ function init() {
 
   $('.gw-razor').css({          'display'       : 'inline'})
   $('#gw-console').css({        'float'         : 'left'})
-  $('#gw-close a').css({        'color'         : '#BC421E'})
+  $('#gw-close a').css({        'color'         : '#BC421E', 'text-decoration' : 'none'})
+  $('#gw-close a:hover').css({  'color'         : '#99C74A', 'text-decoration' : 'underline'})
   $('#gw-close a:visited').css({'color'         : '#BC421E'})
   $('#gw-color').css({          'float'         : 'left'})
-  $('#gw-close').css({          'float'         : 'right', 'margin-right' : '10px'})
+  $('#gw-close').css({          'float'         : 'right', 'margin-right' : '10px', 'margin-top' : '4px'})
 
 
 
 
 
   setGrid(18, 0);
+
+  var shiftKey = false
+
+  $(document).keydown(function(e) {
+    if (e.which == 16) { shiftKey = true; }
+  })
+  $(document).keyup(function(e) {
+    if ( e.which == 13 ) {
+       e.preventDefault();
+     }
+     groom(e)
+
+   })
+
+  
 }
 
+
+
+//////////////////////////
+  
 function setGrid($h, $o) {
   var gridcount = pageHeight / $h;
 
@@ -104,19 +133,6 @@ function shave() {
   gridwax.remove();
   overlay.remove();
 }
-
-var shiftKey = false
-
-$(document).keydown(function(e) {
-  if (e.which == 16) { shiftKey = true; }
-})
-$(document).keyup(function(e) {
-  if ( e.which == 13 ) {
-     e.preventDefault();
-   }
-   groom(e)
-
- })
 
 function groom(e) {
 
@@ -159,7 +175,7 @@ function groom(e) {
         console.log("--")
         break
     }
-  
+
     if (changed) {
       $('.gw-lh').val(_height + 1)
       $('.gw-o').val(gridwax.offset().top)
