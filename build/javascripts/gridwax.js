@@ -1,4 +1,69 @@
+// document.onkeyup = KeyCheck;       
+// function KeyCheck()
+// 
+// {
+// 
+//    var KeyID = event.keyCode;
+// 
+// 
+//    switch(KeyID)
+// 
+//    {
+// 
+//       case 16:
+// 
+//       keyValue = "Shift";
+// 
+//       break; 
+// 
+//       case 17:
+// 
+//       keyValue = "Ctrl";
+// 
+//       break;
+// 
+//       case 18:
+// 
+//       keyValue = "Alt";
+// 
+//       break;
+// 
+//       case 19:
+// 
+//       keyValue = "Pause";
+// 
+//       break;
+// 
+//       case 37:
+// 
+//       keyValue = "Arrow Left";
+// 
+//       break;
+// 
+//       case 38:
+// 
+//       keyValue = "Arrow Up";
+// 
+//       break;
+// 
+//       case 39:
+// 
+//       keyValue = "Arrow Right";
+// 
+//       break;
+// 
+//       case 40:
+// 
+//       keyValue = "Arrow Down";
+// 
+//       break;
+//    }
+//    
+//    console.log(keyValue)
+// 
+// }
 
+// 
 if (!($ = window.jQuery)) { // typeof jQuery=='undefined' works too
   head        = document.getElementsByTagName('head')[0];
   jquery      = document.createElement( 'script' );
@@ -29,8 +94,6 @@ function init() {
 
   pageWidth = $(document).width()
   pageHeight = $(document).height()
-
-  console.log(pageHeight)
 
   $('body').append('<div id="gridwax"></div>')
   gridwax = $('#gridwax')
@@ -95,27 +158,15 @@ function init() {
 
   setGrid(18, 0);
 
-  var shiftKey = false
-
-  $(document).keydown(function(e) {
-    if (e.which == 16) { shiftKey = true; }
-  })
-  $(document).keyup(function(e) {
-    if ( e.which == 13 ) {
-       e.preventDefault();
-     }
-     groom(e)
-
-   })
-
   
 }
 
 
 
 //////////////////////////
-  
+//
 function setGrid($h, $o) {
+  gridwax.html('')
   var gridcount = pageHeight / $h;
 
   for (i=0; i<gridcount; i++) {
@@ -126,14 +177,36 @@ function setGrid($h, $o) {
                                 'height'        : $h-1,
                                 'clear'         : 'both',
                                 'border-bottom' : '1px solid #000' })
-  console.log($('.gw-gridline').height())
+//  console.log($('.gw-gridline').height())
 }
 
+//////////////////////////////
+// Remove Grid
 function shave() {
   gridwax.remove();
   overlay.remove();
 }
 
+//////////////////////////////
+//
+var shiftKey = false
+
+document.onkeydown = keyDown;
+document.onkeyup = keyUp;
+
+
+function keyDown(e) {
+  if (e.which == 16) { shiftKey = true; }
+}
+function keyUp(e) {
+  if ( e.which == 13 ) {
+     e.preventDefault();
+   }
+   groom(e)
+ }
+
+//////////////////////////////
+//
 function groom(e) {
 
   if (shiftKey) {
@@ -152,7 +225,6 @@ function groom(e) {
         // up
         e.preventDefault()
         _height = _height + 1
-        row.height(_height)
         break;
       case 39 :
         // right
@@ -163,7 +235,6 @@ function groom(e) {
         // down
         e.preventDefault()
         _height = _height - 1
-        row.height(_height)
         break;
       case 37 :
         // left
@@ -175,10 +246,11 @@ function groom(e) {
         console.log("--")
         break
     }
-
-    if (changed) {
-      $('.gw-lh').val(_height + 1)
-      $('.gw-o').val(gridwax.offset().top)
+    console.log(_height)
+    if (changed && _height > 0) {
+     $('.gw-lh').val(_height + 1)
+     $('.gw-o').val(gridwax.offset().top)    
+      setGrid(_height + 1, gridwax.offset().top);
     }
   }
 }
