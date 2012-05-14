@@ -108,6 +108,7 @@ function shave() {
   overlay.remove();
 }
 
+
 //////////////////////////////
 //
 var shiftKey = false
@@ -121,8 +122,14 @@ function keyDown(e) {
 }
 function keyUp(e) {
   if ( e.which == 13 ) {
-    console.log('wtf')
+    var $lineHeight = $('.gw-lh');
+    var $offset = $('.gw-o');
      e.preventDefault();
+     if ($lineHeight.is(":focus")) {
+       setGrid($lineHeight.val(), $offset.val());
+     } else if ($offset.is(":focus")) {
+       setGrid($lineHeight.val(), $offset.val());
+     }
    }
    groom(e)
  }
@@ -136,7 +143,7 @@ function groom(e) {
     var row = $('.gw-gridline');
     var _height = row.height();
 
-    var _offset = gridwax.offset();
+    var _offset = gridwax.offset().top;
     
     
     console.log(e.keyCode)
@@ -154,7 +161,7 @@ function groom(e) {
       case 39 :
         // right
         e.preventDefault()
-        gridwax.offset({ top: _offset.top + 1 })
+        _offset = gridwax.offset().top + 1
         break;
       case 40 :
         // down
@@ -164,7 +171,7 @@ function groom(e) {
       case 37 :
         // left
         e.preventDefault()
-        gridwax.offset({ top: _offset.top - 1 })
+        _offset = gridwax.offset().top - 1
         break;
       default :
         changed = false;
@@ -174,8 +181,8 @@ function groom(e) {
     
     if (changed && _height > 0) {
       $('.gw-lh').val(_height + 1)
-      $('.gw-o').val(gridwax.offset().top)    
-      setGrid(_height + 1, gridwax.offset().top);
+      $('.gw-o').val(gridwax.offset().top)
+      setGrid(_height + 1, _offset);
     }
   }
 }
@@ -192,7 +199,8 @@ function setGrid($h, $o) {
   for (i=0; i<gridcount; i++) {
     gridwax.append(gridline)
   }
-
+  
+  gridwax.offset({ top: $o });
   $('.gw-gridline').css({       'width'         : '100%',
                                 'height'        : $h-1,
                                 'clear'         : 'both',
