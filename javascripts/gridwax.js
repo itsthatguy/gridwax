@@ -1,3 +1,10 @@
+/* 
+ * Gridwax
+ * 
+ * an itg. product (special thanks to Relevance)
+ * 
+ */
+
 
 if (!($ = window.jQuery)) { // typeof jQuery=='undefined' works too
   head        = document.getElementsByTagName('head')[0];
@@ -6,16 +13,11 @@ if (!($ = window.jQuery)) { // typeof jQuery=='undefined' works too
   jquery.type = 'text/javascript';
   head.appendChild(jquery);
   
-  // ceaser      = document.createElement( 'link' );
-  // ceaser.href = '/stylesheets/gridwax.css';
-  // ceaser.type = 'text/css';
-  // ceaser.rel  = 'stylesheet';
-  // head.appendChild(ceaser);
-  
   jquery.onload = init
 
 } else {
-  console.log("flkajsdf")
+  // jQuery already loaded
+  init()
 }
 
 var gridwax;
@@ -29,8 +31,6 @@ function init() {
 
   pageWidth = $(document).width()
   pageHeight = $(document).height()
-
-  console.log(pageHeight)
 
   $('body').append('<div id="gridwax"></div>')
   gridwax = $('#gridwax')
@@ -71,10 +71,13 @@ function init() {
                                 'font-family'   : 'helvetica',
                                 'font-size'     : '12px'})
 
-  $('#gw-overlay label').css({  'padding'       : '0 0 0 16px'})
+  $('#gw-overlay label').css({  'display'       : 'inline-block',
+                                'font-size'     :  '12px',
+                                'padding'       : '0 0 0 16px'})
   $('#gw-overlay input').css({  'width'         : '20px',
                                 'background'    : '#111',
                                 'border'        : '1px solid #333',
+                                'font-size'     :  '12px',
                                 'margin'        : '5px',
                                 'color'         : 'white'})
 
@@ -95,45 +98,37 @@ function init() {
 
   setGrid(18, 0);
 
-  var shiftKey = false
-
-  $(document).keydown(function(e) {
-    if (e.which == 16) { shiftKey = true; }
-  })
-  $(document).keyup(function(e) {
-    if ( e.which == 13 ) {
-       e.preventDefault();
-     }
-     groom(e)
-
-   })
-
   
 }
 
-
-
-//////////////////////////
-  
-function setGrid($h, $o) {
-  var gridcount = pageHeight / $h;
-
-  for (i=0; i<gridcount; i++) {
-    gridwax.append(gridline)
-  }
-
-  $('.gw-gridline').css({       'width'         : '100%',
-                                'height'        : $h-1,
-                                'clear'         : 'both',
-                                'border-bottom' : '1px solid #000' })
-  console.log($('.gw-gridline').height())
-}
-
+//////////////////////////////
+// Remove Grid
 function shave() {
   gridwax.remove();
   overlay.remove();
 }
 
+//////////////////////////////
+//
+var shiftKey = false
+
+document.onkeydown = keyDown;
+document.onkeyup = keyUp;
+
+
+function keyDown(e) {
+  if (e.which == 16) { shiftKey = true; }
+}
+function keyUp(e) {
+  if ( e.which == 13 ) {
+    console.log('wtf')
+     e.preventDefault();
+   }
+   groom(e)
+ }
+
+//////////////////////////////
+//
 function groom(e) {
 
   if (shiftKey) {
@@ -142,6 +137,9 @@ function groom(e) {
     var _height = row.height();
 
     var _offset = gridwax.offset();
+    
+    
+    console.log(e.keyCode)
 
     switch(e.keyCode) {
       case 16 :
@@ -152,7 +150,6 @@ function groom(e) {
         // up
         e.preventDefault()
         _height = _height + 1
-        row.height(_height)
         break;
       case 39 :
         // right
@@ -163,7 +160,6 @@ function groom(e) {
         // down
         e.preventDefault()
         _height = _height - 1
-        row.height(_height)
         break;
       case 37 :
         // left
@@ -173,13 +169,36 @@ function groom(e) {
       default :
         changed = false;
         console.log("--")
-        break
+        break;
     }
-
-    if (changed) {
+    
+    if (changed && _height > 0) {
       $('.gw-lh').val(_height + 1)
-      $('.gw-o').val(gridwax.offset().top)
+      $('.gw-o').val(gridwax.offset().top)    
+      setGrid(_height + 1, gridwax.offset().top);
     }
   }
 }
+
+//////////////////////////
+//
+function setGrid($h, $o) {
+  
+  console.log($('body').offset().top)
+  
+  gridwax.html('')
+  var gridcount = pageHeight / $h;
+
+  for (i=0; i<gridcount; i++) {
+    gridwax.append(gridline)
+  }
+
+  $('.gw-gridline').css({       'width'         : '100%',
+                                'height'        : $h-1,
+                                'clear'         : 'both',
+                                'border-bottom' : '1px solid #000' })
+//  console.log($('.gw-gridline').height())
+}
+
+
 ;
