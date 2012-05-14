@@ -1,69 +1,11 @@
-// document.onkeyup = KeyCheck;       
-// function KeyCheck()
-// 
-// {
-// 
-//    var KeyID = event.keyCode;
-// 
-// 
-//    switch(KeyID)
-// 
-//    {
-// 
-//       case 16:
-// 
-//       keyValue = "Shift";
-// 
-//       break; 
-// 
-//       case 17:
-// 
-//       keyValue = "Ctrl";
-// 
-//       break;
-// 
-//       case 18:
-// 
-//       keyValue = "Alt";
-// 
-//       break;
-// 
-//       case 19:
-// 
-//       keyValue = "Pause";
-// 
-//       break;
-// 
-//       case 37:
-// 
-//       keyValue = "Arrow Left";
-// 
-//       break;
-// 
-//       case 38:
-// 
-//       keyValue = "Arrow Up";
-// 
-//       break;
-// 
-//       case 39:
-// 
-//       keyValue = "Arrow Right";
-// 
-//       break;
-// 
-//       case 40:
-// 
-//       keyValue = "Arrow Down";
-// 
-//       break;
-//    }
-//    
-//    console.log(keyValue)
-// 
-// }
+/* 
+ * Gridwax
+ * 
+ * an itg. product (special thanks to Relevance)
+ * 
+ */
 
-// 
+
 if (!($ = window.jQuery)) { // typeof jQuery=='undefined' works too
   head        = document.getElementsByTagName('head')[0];
   jquery      = document.createElement( 'script' );
@@ -71,16 +13,11 @@ if (!($ = window.jQuery)) { // typeof jQuery=='undefined' works too
   jquery.type = 'text/javascript';
   head.appendChild(jquery);
   
-  // ceaser      = document.createElement( 'link' );
-  // ceaser.href = '/stylesheets/gridwax.css';
-  // ceaser.type = 'text/css';
-  // ceaser.rel  = 'stylesheet';
-  // head.appendChild(ceaser);
-  
   jquery.onload = init
 
 } else {
-  console.log("flkajsdf")
+  // jQuery already loaded
+  init()
 }
 
 var gridwax;
@@ -134,10 +71,13 @@ function init() {
                                 'font-family'   : 'helvetica',
                                 'font-size'     : '12px'})
 
-  $('#gw-overlay label').css({  'padding'       : '0 0 0 16px'})
+  $('#gw-overlay label').css({  'display'       : 'inline-block',
+                                'font-size'     :  '12px',
+                                'padding'       : '0 0 0 16px'})
   $('#gw-overlay input').css({  'width'         : '20px',
                                 'background'    : '#111',
                                 'border'        : '1px solid #333',
+                                'font-size'     :  '12px',
                                 'margin'        : '5px',
                                 'color'         : 'white'})
 
@@ -161,25 +101,6 @@ function init() {
   
 }
 
-
-
-//////////////////////////
-//
-function setGrid($h, $o) {
-  gridwax.html('')
-  var gridcount = pageHeight / $h;
-
-  for (i=0; i<gridcount; i++) {
-    gridwax.append(gridline)
-  }
-
-  $('.gw-gridline').css({       'width'         : '100%',
-                                'height'        : $h-1,
-                                'clear'         : 'both',
-                                'border-bottom' : '1px solid #000' })
-//  console.log($('.gw-gridline').height())
-}
-
 //////////////////////////////
 // Remove Grid
 function shave() {
@@ -200,6 +121,7 @@ function keyDown(e) {
 }
 function keyUp(e) {
   if ( e.which == 13 ) {
+    console.log('wtf')
      e.preventDefault();
    }
    groom(e)
@@ -215,6 +137,9 @@ function groom(e) {
     var _height = row.height();
 
     var _offset = gridwax.offset();
+    
+    
+    console.log(e.keyCode)
 
     switch(e.keyCode) {
       case 16 :
@@ -244,14 +169,36 @@ function groom(e) {
       default :
         changed = false;
         console.log("--")
-        break
+        break;
     }
-    console.log(_height)
+    
     if (changed && _height > 0) {
-     $('.gw-lh').val(_height + 1)
-     $('.gw-o').val(gridwax.offset().top)    
+      $('.gw-lh').val(_height + 1)
+      $('.gw-o').val(gridwax.offset().top)    
       setGrid(_height + 1, gridwax.offset().top);
     }
   }
 }
+
+//////////////////////////
+//
+function setGrid($h, $o) {
+  
+  console.log($('body').offset().top)
+  
+  gridwax.html('')
+  var gridcount = pageHeight / $h;
+
+  for (i=0; i<gridcount; i++) {
+    gridwax.append(gridline)
+  }
+
+  $('.gw-gridline').css({       'width'         : '100%',
+                                'height'        : $h-1,
+                                'clear'         : 'both',
+                                'border-bottom' : '1px solid #000' })
+//  console.log($('.gw-gridline').height())
+}
+
+
 ;
