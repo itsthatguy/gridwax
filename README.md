@@ -2,6 +2,9 @@
 
 Gridwax is a bookmarklet that was designed to make working with vertical rhythm on the web less painful. It overlays a baseline grid on your website, that you can quickly adjust using keyboard shortcuts, or by entering values manually!
 
+#### Where to get it: [gridwax.herokuapp.com](http://gridwax.herokuapp.com)
+
+
 ## Hotkeys
 
 #### Adjust Vertical Spacing
