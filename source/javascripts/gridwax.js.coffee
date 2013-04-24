@@ -73,6 +73,9 @@ class GridWax
       "font-family" : "helvetica"
       "font-size"   : "12px"
 
+    @overlay.css
+      background    : "-moz-linear-gradient(top,  #333,  #222)"
+
     $("#gw-overlay label").css
       display     : "inline-block"
       "font-size" : "12px"
