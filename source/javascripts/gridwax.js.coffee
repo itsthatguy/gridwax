@@ -100,9 +100,10 @@ class GridWax
       border          : "1px solid #333"
       "font-size"     : "0"
       overflow        : "hidden"
-      top             : "-12px"
-      margin          : "0 0 5px 5px"
+      top             : "-3px"
+      "margin-left"   : "5px"
       position        : "relative"
+      "vertical-align": "top"
       "text-indent"   : "-1000%"
 
     color = $("#gw-overlay .color")
