@@ -1,4 +1,4 @@
-# Gridwax version 2
+# Gridwax version 2.1
 
 class GridWax
   constructor: ->
@@ -52,7 +52,7 @@ class GridWax
                             <a class='color'>#7576c9</a>
                           </label>
                         </div>
-                        <div id='gw-close' class='gw-razor'><a href='javascript:window.gridwax.shave();'>Remove the Grid ✖</a></div>
+                        <div id='gw-close' class='gw-razor'><a href='#' onclick='window.gridwax.shave();'>Remove the Grid ✖</a></div>
                       </div>"
 
     @overlay = $("#gw-overlay")
@@ -72,6 +72,9 @@ class GridWax
       color         : "#fff"
       "font-family" : "helvetica"
       "font-size"   : "12px"
+
+    @overlay.css
+      background    : "-moz-linear-gradient(top,  #333,  #222)"
 
     $("#gw-overlay label").css
       display     : "inline-block"
@@ -97,9 +100,10 @@ class GridWax
       border          : "1px solid #333"
       "font-size"     : "0"
       overflow        : "hidden"
-      top             : "-12px"
-      margin          : "0 0 5px 5px"
+      top             : "-3px"
+      "margin-left"   : "5px"
       position        : "relative"
+      "vertical-align": "top"
       "text-indent"   : "-1000%"
 
     color = $("#gw-overlay .color")
@@ -136,7 +140,8 @@ class GridWax
 
   #////////////////////////////
   # Remove Grid
-  shave: ->
+  shave: (e) ->
+    e.preventDefault() unless !e?
     @gridwax.remove()
     @overlay.remove()
     window.gridwaxLoader.cleanShave()
