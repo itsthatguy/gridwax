@@ -1,4 +1,4 @@
-# Gridwax version 2
+# Gridwax version 2.1
 
 class GridWax
   constructor: ->
