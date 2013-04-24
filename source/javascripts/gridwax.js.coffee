@@ -52,7 +52,7 @@ class GridWax
                             <a class='color'>#7576c9</a>
                           </label>
                         </div>
-                        <div id='gw-close' class='gw-razor'><a href='javascript:window.gridwax.shave();'>Remove the Grid ✖</a></div>
+                        <div id='gw-close' class='gw-razor'><a href='#' onclick='window.gridwax.shave();'>Remove the Grid ✖</a></div>
                       </div>"
 
     @overlay = $("#gw-overlay")
@@ -136,7 +136,8 @@ class GridWax
 
   #////////////////////////////
   # Remove Grid
-  shave: ->
+  shave: (e) ->
+    e.preventDefault() unless !e?
     @gridwax.remove()
     @overlay.remove()
     window.gridwaxLoader.cleanShave()
