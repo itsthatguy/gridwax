@@ -5,7 +5,7 @@ class GridWax
     unless $ = window.jQuery
       head = document.getElementsByTagName("head")[0]
       jquery = document.createElement("script")
-      jquery.src = "http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"
+      jquery.src = "//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"
       jquery.type = "text/javascript"
       head.appendChild jquery
 
@@ -36,7 +36,7 @@ class GridWax
     @gridline = "<div class='gw-gridline'></div>"
     $("body").css "padding-bottom", "35px"
     $("body").append "<div id='gw-overlay'>
-                        <img src='http://dl.dropbox.com/u/37716909/moustache.png'/>
+                        <img src='//dl.dropbox.com/u/37716909/moustache.png'/>
                         <div id='gw-console' class='gw-razor'>
                           <label>Line-height: <input type='text' class='gw-lh' value='18' /></label>
                           <label>Offset: <input type='text' class='gw-o' value='0' /></label>
