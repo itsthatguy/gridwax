@@ -1,0 +1,10 @@
+#!/bin/bash
+
+git checkout dev-environment
+middleman build
+git checkout master
+git pull
+git show dev-environment:build/javascripts/gridwax.js > gridwax.js
+git show dev-environment:source/javascripts/gridwax.js.coffee > gridwax.js.coffee
+git commit -am $*
+git push
