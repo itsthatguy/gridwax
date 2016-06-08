@@ -1,16 +1,12 @@
-(function() {
+(function($) {
   var GridWax, GridwaxLoader,
     __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
   GridWax = (function() {
-
     function GridWax() {
       this.keyUp = __bind(this.keyUp, this);
-
       this.keyDown = __bind(this.keyDown, this);
-
       this.init = __bind(this.init, this);
-
       var $, head, jquery;
       if (!($ = window.jQuery)) {
         head = document.getElementsByTagName("head")[0];
@@ -25,8 +21,7 @@
     }
 
     GridWax.prototype.init = function() {
-      var color, item, _i, _len,
-        _this = this;
+      var color, item, _i, _len;
       document.onkeydown = this.keyDown;
       document.onkeyup = this.keyUp;
       this.pageWidth = $(document).width();
@@ -46,7 +41,7 @@
       });
       this.gridline = "<div class='gw-gridline'></div>";
       $("body").css("padding-bottom", "35px");
-      $("body").append("<div id='gw-overlay'>                        <img src='//dl.dropbox.com/u/37716909/moustache.png'/>                        <div id='gw-console' class='gw-razor'>                          <label>Line-height: <input type='text' class='gw-lh' value='18' /></label>                          <label>Offset: <input type='text' class='gw-o' value='0' /></label>                          <label>Color:                            <a class='color'>#efefef</a>                            <a class='color'>#000</a>                            <a class='color'>#bd424b</a>                            <a class='color'>#cb6020</a>                            <a class='color'>#ffe960</a>                            <a class='color'>#3f9679</a>                            <a class='color'>#4c8dcf</a>                            <a class='color'>#a672ae</a>                            <a class='color'>#7576c9</a>                          </label>                        </div>                        <div id='gw-close' class='gw-razor'><a href='#' onclick='window.gridwax.shave();'>Remove the Grid ✖</a></div>                      </div>");
+      $("body").append("<div id='gw-overlay'> <img src='//dl.dropbox.com/u/37716909/moustache.png'/> <div id='gw-console' class='gw-razor'> <label>Line-height: <input type='text' class='gw-lh' value='18' /></label> <label>Offset: <input type='text' class='gw-o' value='0' /></label> <label>Color: <a class='color'>#efefef</a> <a class='color'>#000</a> <a class='color'>#bd424b</a> <a class='color'>#cb6020</a> <a class='color'>#ffe960</a> <a class='color'>#3f9679</a> <a class='color'>#4c8dcf</a> <a class='color'>#a672ae</a> <a class='color'>#7576c9</a> </label> </div> <div id='gw-close' class='gw-razor'><a href='#' onclick='window.gridwax.shave();'>Remove the Grid ✖</a></div> </div>");
       this.overlay = $("#gw-overlay");
       this.overlay.css({
         position: "fixed",
@@ -104,12 +99,14 @@
         $(item).css({
           "background-color": $(item).text()
         });
-        $(item).click(function(e) {
-          _this.gridlineColor = $(e.target).text();
-          return $(".gw-gridline").css({
-            "border-color": _this.gridlineColor
-          });
-        });
+        $(item).click((function(_this) {
+          return function(e) {
+            _this.gridlineColor = $(e.target).text();
+            return $(".gw-gridline").css({
+              "border-color": _this.gridlineColor
+            });
+          };
+        })(this));
       }
       $("#gw-overlay img").css({
         float: "left",
@@ -144,7 +141,7 @@
     };
 
     GridWax.prototype.shave = function(e) {
-      if (!!(e != null)) {
+      if (!(e == null)) {
         e.preventDefault();
       }
       this.gridwax.remove();
@@ -232,7 +229,8 @@
         clear: "both",
         "border-bottom-color": this.gridlineColor,
         "border-bottom-width": "1px",
-        "border-bottom-style": "solid"
+        "border-bottom-style": "solid",
+        "box-sizing": "content-box"
       });
     };
 
@@ -255,7 +253,6 @@
   })();
 
   GridwaxLoader = (function() {
-
     function GridwaxLoader() {
       this.checkMirror();
     }
@@ -281,10 +278,11 @@
     };
 
     GridwaxLoader.prototype.checkForWax = function(scripts) {
-      var _this = this;
-      return scripts.filter(function(script) {
-        return _this.isItAlreadySticky(script) !== void 0;
-      });
+      return scripts.filter((function(_this) {
+        return function(script) {
+          return _this.isItAlreadySticky(script) !== void 0;
+        };
+      })(this));
     };
 
     GridwaxLoader.prototype.gatherScripts = function() {
@@ -336,5 +334,4 @@
   if (!window.gridwax) {
     window.gridwax = new GridWax;
   }
-
-}).call(this);
+}).call(this, jQuery);

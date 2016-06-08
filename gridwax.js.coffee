@@ -221,6 +221,7 @@ class GridWax
       "border-bottom-color" : @gridlineColor
       "border-bottom-width" : "1px"
       "border-bottom-style" : "solid"
+      "box-sizing"          : "content-box"
 
   @gridwax = undefined
   @gridline = undefined
